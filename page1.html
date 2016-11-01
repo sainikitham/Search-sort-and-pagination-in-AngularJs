@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">	
+<script src="bind.js"></script>
+<script src="dirPagination.js"></script>
+<style>
+.arrow-up {
+  width: 0; 
+  height: 0; 
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid black;
+  display:inline-block;
+}
+
+.arrow-down {
+  width: 0; 
+  height: 0; 
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid black;
+   display:inline-block;
+  
+}
+</style>
+</head>
+<body ng-app = "newApp" ng-controller = "newcontroller">
+<div >
+<div class="row">
+        <div class="input-field col s12">
+        <input type="text" class="input-field col s9" ng-model = "searchText.$" placeholder="SEARCH HERE" >
+        <input type="text" class="input-field col s9" ng-model = "searchText.firstname" placeholder="SEARCH FOR NAME" >
+        <input type="text" class="input-field col s9" ng-model = "searchText.firstname" placeholder="SEARCH FOR CITY" >
+        </div>
+</div>
+<input type="checkbox" ng-model="strict" class="filled-in" id="filled-in-box" />
+      <label for="filled-in-box"><b>EXACT</b></label>
+<br>     
+<input type="checkbox" ng-model="hidden" id="test6"  />
+      <label for="test6"><b>HIDE SALARY</b></label>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+<br><br>
+
+<table class="striped">
+<tr>
+
+<th ng-click = "sortdata('firstname')">Name <div ng-class = "getsymbol('firstname')"></div> </th>
+<th ng-click = "sortdata('gender')">Gender <div ng-class = "getsymbol('gender')"></div></th>
+<th ng-click = "sortdata('salary')" ng-hide="hidden">Salary <div ng-class = "getsymbol('salary')"></div> </th>
+<th ng-click = "sortdata('salary')" ng-show="hidden">Salary <div ng-class = "getsymbol('salary')"></div></th>
+<th ng-click = "sortdata('city')">Country <div ng-class = "getsymbol('city')"></div></th>
+</tr>
+<tr dir-paginate = "employee in employees | filter : searchText:strict |itemsPerPage:5 | orderBy : data:sortfield " >
+<td>{{employee.firstname}}</td>
+<td>{{employee.gender}}</td>
+<td ng-hide="hidden">{{employee.salary}}</td>
+<td ng-show="hidden">####</td>
+<td>{{employee.city}}</td>
+</tr>
+</table>
+<br/>
+<center>
+<dir-pagination-controls
+       max-size="10"
+       direction-links="true"
+       boundary-links="true" >
+    </dir-pagination-controls>
+</center>
+</div>
+</body>
+</html>
